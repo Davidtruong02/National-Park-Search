@@ -57,24 +57,3 @@ var searchForm = document.getElementById('input-container');
 } 
 
 searchForm.addEventListener('submit', searchNationalParkWeather);
-
-function submitDepartureDate() {
-    // Get the selected Departure Date 
-   const depaprtureDateInput = Document.getElementById('DepartureDate');
-   const selectedDapartureDate = depaprtureDateInput.Value;
- 
-   alert('Departure Date Selected: ${selectedDepartureDate}'); 
-     
-   function submitState() {
-     // Get the selected State 
-     const StateSelect = document.getElementById('stateSelect');
-     const selectedState = selectedState.Value 
- 
-     if (selectedState) {
-        alert('Selected State: ${selectedState}');
-     } else { 
-         alert('Please select a state');
-     }
-   }
- 
- }
