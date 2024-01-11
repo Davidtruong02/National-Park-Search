@@ -63,3 +63,22 @@ body {
 #weatherInfo {
     margin-top: 20px;
 }
+
+.forecast-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.forecast-day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+    background-color: #fff;
+    padding: 20px;
+}
