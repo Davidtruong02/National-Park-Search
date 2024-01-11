@@ -1,3 +1,104 @@
+//--------------------------------------------------------------------------------------------------------------------------------------------//
+//                                                                 State Selector                                                             //
+//--------------------------------------------------------------------------------------------------------------------------------------------//
+
+var btn1 = document.getElementById('search');
+
+const states = [
+    { name: "Alabama", abbr: "AL" },
+    { name: "Alaska", abbr: "AK" },
+    { name: "American Samoa", abbr: "AS" },
+    { name: "Arizona", abbr: "AZ" },
+    { name: "Arkansas", abbr: "AR" },
+    { name: "California", abbr: "CA" },
+    { name: "Colorado", abbr: "CO" },
+    { name: "Connecticut", abbr: "CT" },
+    { name: "Delaware", abbr: "DE" },
+    { name: "District of Columbia", abbr: "DC" },
+    { name: "Florida", abbr: "FL" },
+    { name: "Georgia", abbr: "GA" },
+    { name: "Guam", abbr: "GU" },
+    { name: "Hawaii", abbr: "HI" },
+    { name: "Idaho", abbr: "ID" },
+    { name: "Illinois", abbr: "IL" },
+    { name: "Indiana", abbr: "IN" },
+    { name: "Iowa", abbr: "IA" },
+    { name: "Kansas", abbr: "KS" },
+    { name: "Kentucky", abbr: "KY" },
+    { name: "Louisiana", abbr: "LA" },
+    { name: "Maine", abbr: "ME" },
+    { name: "Maryland", abbr: "MD" },
+    { name: "Massachusetts", abbr: "MA" },
+    { name: "Michigan", abbr: "MI" },
+    { name: "Minnesota", abbr: "MN" },
+    { name: "Mississippi", abbr: "MS" },
+    { name: "Missouri", abbr: "MO" },
+    { name: "Montana", abbr: "MT" },
+    { name: "Nebraska", abbr: "NE" },
+    { name: "Nevada", abbr: "NV" },
+    { name: "New Hampshire", abbr: "NH" },
+    { name: "New Jersey", abbr: "NJ" },
+    { name: "New Mexico", abbr: "NM" },
+    { name: "New York", abbr: "NY" },
+    { name: "North Carolina", abbr: "NC" },
+    { name: "North Dakota", abbr: "ND" },
+    { name: "Northern Mariana Islands", abbr: "MP" },
+    { name: "Ohio", abbr: "OH" },
+    { name: "Oklahoma", abbr: "OK" },
+    { name: "Oregon", abbr: "OR" },
+    { name: "Pennsylvania", abbr: "PA" },
+    { name: "Puerto Rico", abbr: "PR" },
+    { name: "Rhode Island", abbr: "RI" },
+    { name: "South Carolina", abbr: "SC" },
+    { name: "South Dakota", abbr: "SD" },
+    { name: "Tennessee", abbr: "TN" },
+    { name: "Texas", abbr: "TX" },
+    { name: "Utah", abbr: "UT" },
+    { name: "Vermont", abbr: "VT" },
+    { name: "Virgin Islands", abbr: "VI" },
+    { name: "Virginia", abbr: "VA" },
+    { name: "Washington", abbr: "WA" },
+    { name: "West Virginia", abbr: "WV" },
+    { name: "Wisconsin", abbr: "WI" },
+    { name: "Wyoming", abbr: "WY" },
+  ];
+  
+  const stateInput = document.getElementById("stateInput");
+
+  
+  states.forEach((state) => {
+    const option = document.createElement("option");
+    option.value = state.abbr;
+    option.textContent = state.name;
+    stateInput.appendChild(option);
+  });
+
+// Add event listener to stateInput element
+stateInput.addEventListener('change', (event) => {
+  const selectedState = event.target.value;
+
+  if (selectedState) {
+    const selectedStateObj = states.find(state => state.abbr === selectedState);
+
+    if (selectedStateObj) {
+      const selectedStateJson = JSON.stringify({ abbr: selectedState});
+      localStorage.setItem('selectedState', selectedStateJson);
+    } else {
+      console.log('State not found in the states array');
+    }
+  }
+});
+
+
+
+
+
+
+
+//--------------------------------------------------------------------------------------------------------------------------------------------//
+//                                                                  Weather API                                                               //
+//--------------------------------------------------------------------------------------------------------------------------------------------//
+
 const apiKey = "151fee77ec9df13d3f8e8d88f6890fc2";
 const mapQuestApiKey = "ej1jF6SPfaZl671vKt3mUoMxw2Cdj7iV";
 const searchForm = document.getElementById("input-container");
@@ -64,4 +165,93 @@ async function getCoordinates(parkName) {
   }
 }
 
-searchForm.addEventListener("submit", searchNationalParkWeather);
+// searchForm.addEventListener("submit", searchNationalParkWeather);
+
+
+
+//--------------------------------------------------------------------------------------------------------------------------------------------//
+//                                                                     NPS API                                                                //
+//--------------------------------------------------------------------------------------------------------------------------------------------//
+
+
+
+// Variable to store the NPS API key
+// const npsApiKey = "x8MurMnpRvI0zVQH0bsTRh6vhu0wtxtHWZTpXPkd";
+
+function fetchNPSData() {
+    const selectedStateJson = localStorage.getItem("selectedState");
+    const selectedStateObj = JSON.parse(selectedStateJson);
+    const selectedStateAbbr = selectedStateObj.abbr;
+    const npsApiKey = "x8MurMnpRvI0zVQH0bsTRh6vhu0wtxtHWZTpXPkd";
+    const apiUrl = 'https://developer.nps.gov/api/v1/parks?stateCode='+selectedStateAbbr+'&api_key='+npsApiKey;
+  
+    fetch(apiUrl)
+      .then(res => res.json())
+      .then(data => {
+        const npsData = data.data.map(item => ({
+          fullName: item.fullName,
+          description: item.description,
+          latitude: item.latitude,
+          longitude: item.longitude,
+          url: item.url
+        }));
+  
+        const npsDataJson = JSON.stringify(npsData);
+        localStorage.setItem('npsData', npsDataJson);
+  
+        console.log(npsData);
+      })
+      .catch((error) => {
+        console.error("Error fetching NPS data:", error);
+      });
+  }
+
+  function createNPSDataCards() {
+    const npsDataJson = localStorage.getItem("npsData");
+    const npsData = JSON.parse(npsDataJson);
+  
+    const container = document.getElementById("npsDataContainer");
+  
+    npsData.forEach(item => {
+      const card = document.createElement("div");
+      card.classList.add("npsData");
+  
+      const header = document.createElement("h2");
+      header.textContent = item.fullName;
+      card.appendChild(header);
+  
+      const description = document.createElement("p");
+      description.textContent = item.description;
+      card.appendChild(description);
+  
+      const url = document.createElement("a");
+      url.textContent = "Visit Website";
+      url.href = item.url;
+      card.appendChild(url);
+  
+      container.appendChild(card);
+    });
+  }
+
+
+
+
+btn1.addEventListener('click', (event) => {
+  event.preventDefault();
+  // searchNationalParkWeather();
+  fetchNPSData();
+  createNPSDataCards();
+
+  const selectedState = stateInput.value;
+
+  if (selectedState) {
+    const selectedStateObj = states.find(state => state.abbr === selectedState);
+
+    if (selectedStateObj) {
+      const selectedStateJson = JSON.stringify({ abbr: selectedState});
+      localStorage.setItem('selectedState', selectedStateJson);
+    } else {
+      console.log('State not found in the states array');
+    }
+  }
+});
