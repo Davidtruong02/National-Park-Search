@@ -55,7 +55,6 @@ async function searchNationalParkWeather(event) {
 
 
 
-
 // Function to get coordinates using MapQuest Geocoding API
 async function getCoordinates(parkName) {
   const mapQuestApiKey = "ej1jF6SPfaZl671vKt3mUoMxw2Cdj7iV";
@@ -77,5 +76,6 @@ async function getCoordinates(parkName) {
     );
   }
 }
+
 
 searchForm.addEventListener("submit", searchNationalParkWeather);
