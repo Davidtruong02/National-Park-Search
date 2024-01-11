@@ -16,14 +16,16 @@
         </div>
         <form class="input-container" id="input-container">
             <input type="text" name="park" id="parkInput" placeholder="National Park Name">
+            <select class="stateInput" id="stateInput" name="state">
+                <option value="">Parks by state</option>
             <input type="date" name="arrival-date" placeholder="Arrival Date">
-            <input type="date" name="departure-date" placeholder="Departure Date">
             <button type="submit" id="search" class="search-button">Search</button>
         </form>
-        <div class="weather-container" id="weather-container"></div>
+        <div class="weather-container" id="weather-container">
             <div class="current-weather" id="current-weather"></div>
-            <div class="forecast-container" id="forecast-container"></div>
-
+            <div class="forecast-container" id="forecast-container"></div>  
+        </div>
+    <div id="npsDataContainer"></div>
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>

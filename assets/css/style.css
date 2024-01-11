@@ -82,3 +82,8 @@ body {
     background-color: #fff;
     padding: 20px;
 }
+
+.stateInput{
+    margin-bottom: 15px;;
+    padding: 11px;
+}
