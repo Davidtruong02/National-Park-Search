@@ -109,13 +109,6 @@ async function searchNationalParkWeather(event) {
   event.preventDefault();
   console.log("HELLO THERE, THIS IS SEARCH NATIONAL PARK WEATHER");
 
-  const parkInput = document.getElementById("parkInput");
-  const parkName = parkInput.value.trim();
-
-  if (parkName === "") {
-    alert("Please enter a National Park name.");
-    return;
-  }
 
   try {
     const location = await getCoordinates(parkName);
@@ -165,7 +158,7 @@ async function getCoordinates(parkName) {
   }
 }
 
-// searchForm.addEventListener("submit", searchNationalParkWeather);
+ searchForm.addEventListener("submit", searchNationalParkWeather);
 
 
 
@@ -211,6 +204,8 @@ function fetchNPSData() {
     const npsData = JSON.parse(npsDataJson);
   
     const container = document.getElementById("npsDataContainer");
+    
+    npsDataContainer =
   
     npsData.forEach(item => {
       const card = document.createElement("div");
@@ -238,7 +233,7 @@ function fetchNPSData() {
 
 btn1.addEventListener('click', (event) => {
   event.preventDefault();
-  // searchNationalParkWeather();
+   searchNationalParkWeather();
   fetchNPSData();
   createNPSDataCards();
 
