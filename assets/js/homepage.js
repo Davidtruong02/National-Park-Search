@@ -104,7 +104,7 @@ btn1.addEventListener('click', (e) => {
   fetch(apiUrl)
     .then(response => response.json())
     .then(data => {
-      const parks = data.data;
+      const parks = data.data.slice(0, 5);
       parkContainer.innerHTML = '';
       parks.forEach(park => {
         const parkDiv = document.createElement('div');
