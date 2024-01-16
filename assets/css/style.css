@@ -98,3 +98,14 @@ body {
     width: 100%;
 }
 
+#parkContainer {
+    position: fixed;
+    top: 10px; /* Adjust the top position as needed */
+    right: 10px; /* Adjust the right position as needed */
+    max-width: 600px; /* Adjust the max-width as needed */
+    background-color: #ffffff; /* Optional background color */
+    padding: 10px; /* Optional padding */
+    border: 1px solid #ccc; /* Optional border */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional box shadow */
+  }
+
