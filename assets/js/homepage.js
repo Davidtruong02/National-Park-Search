@@ -7,7 +7,6 @@ var btn1 = document.getElementById('search');
 const states = [
     { name: "Alabama", abbr: "AL" },
     { name: "Alaska", abbr: "AK" },
-    { name: "American Samoa", abbr: "AS" },
     { name: "Arizona", abbr: "AZ" },
     { name: "Arkansas", abbr: "AR" },
     { name: "California", abbr: "CA" },
@@ -17,7 +16,6 @@ const states = [
     { name: "District of Columbia", abbr: "DC" },
     { name: "Florida", abbr: "FL" },
     { name: "Georgia", abbr: "GA" },
-    { name: "Guam", abbr: "GU" },
     { name: "Hawaii", abbr: "HI" },
     { name: "Idaho", abbr: "ID" },
     { name: "Illinois", abbr: "IL" },
@@ -42,12 +40,10 @@ const states = [
     { name: "New York", abbr: "NY" },
     { name: "North Carolina", abbr: "NC" },
     { name: "North Dakota", abbr: "ND" },
-    { name: "Northern Mariana Islands", abbr: "MP" },
     { name: "Ohio", abbr: "OH" },
     { name: "Oklahoma", abbr: "OK" },
     { name: "Oregon", abbr: "OR" },
     { name: "Pennsylvania", abbr: "PA" },
-    { name: "Puerto Rico", abbr: "PR" },
     { name: "Rhode Island", abbr: "RI" },
     { name: "South Carolina", abbr: "SC" },
     { name: "South Dakota", abbr: "SD" },
@@ -65,7 +61,6 @@ const states = [
   
   const stateInput = document.getElementById("stateInput");
 
-  
   states.forEach((state) => {
     const option = document.createElement("option");
     option.value = state.abbr;
@@ -87,92 +82,9 @@ stateInput.addEventListener('change', (event) => {
       console.log('State not found in the states array');
     }
   }
-
-  function pickArrivalDate() {
-    // get the selected arrival date 
-    const ArrivalDateInput = document.getElementById('arriveDate');
-    const selectedArrivalDate = ArrivalDateInput.value;
-    
-    // display the selected arrival date 
-    const resultParagraph = document.getElementById('result');
-    if (selectedArrivalDate) {
-     resultParagraph.textContent = 'Arrival Date Selected: ${selectedarrivalDate}';
-    } else {
-        resultParagraph.textContent = 'please select an arrival date';
-    }
-    }
 });
 
 
-
-
-
-
-
-//--------------------------------------------------------------------------------------------------------------------------------------------//
-//                                                                  Weather API                                                               //
-//--------------------------------------------------------------------------------------------------------------------------------------------//
-
-const apiKey = "151fee77ec9df13d3f8e8d88f6890fc2";
-const mapQuestApiKey = "ej1jF6SPfaZl671vKt3mUoMxw2Cdj7iV";
-const searchForm = document.getElementById("input-container");
-const forecastInfo = document.getElementById("forecast-container");
-const units = "imperial";
-
-async function searchNationalParkWeather(event) {
-  event.preventDefault();
-  console.log("HELLO THERE, THIS IS SEARCH NATIONAL PARK WEATHER");
-
-
-  try {
-    const location = await getCoordinates(parkName);
-    const [lat, lon] = location.split(",");
-    const forecastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=${units}&appid=${apiKey}`;
-    const forecastResponse = await fetch(forecastApiUrl);
-    const forecastData = await forecastResponse.json();
-
-    forecastInfo.innerHTML = '<h2>5-Day Weather Forecast</h2>';
-
-    for (let i = 0; i < forecastData.list.length; i += 8) {
-      const forecast = forecastData.list[i];
-      const date = new Date(forecast.dt * 1000);
-      const day = date.toLocaleDateString("en-US", { weekday: "long" });
-
-      forecastInfo.innerHTML += `
-        <div class="forecast-day">
-          <p>${day}</p>
-          <p> <img src="https://openweathermap.org/img/w/${forecast.weather[0].icon}.png" alt="${forecast.weather[0].description}" /> </p>
-          <p>Temperature: ${forecast.main.temp} °F</p>
-          <p>Humidity: ${forecast.main.humidity}%</p>
-          <p>Wind Speed: ${forecast.wind.speed} m/s</p>
-        </div>
-      `;
-    }
-  } catch (error) {
-    console.error("Error fetching weather data:", error);
-  }
-}
-
-async function getCoordinates(parkName) {
-  const geocodingApiUrl = `https://www.mapquestapi.com/geocoding/v1/address?key=${mapQuestApiKey}&location=${parkName}`;
-  const response = await fetch(geocodingApiUrl);
-  const data = await response.json();
-
-  if (
-    data.results &&
-    data.results[0] &&
-    data.results[0].locations &&
-    data.results[0].locations[0]
-  ) {
-    return `${data.results[0].locations[0].latLng.lat},${data.results[0].locations[0].latLng.lng}`;
-  } else {
-    throw new Error(
-      "Unable to fetch coordinates for the specified National Park."
-    );
-  }
-}
-
- searchForm.addEventListener("submit", searchNationalParkWeather);
 
 
 
@@ -182,88 +94,30 @@ async function getCoordinates(parkName) {
 
 
 
-// Variable to store the NPS API key
-// const npsApiKey = "x8MurMnpRvI0zVQH0bsTRh6vhu0wtxtHWZTpXPkd";
 
-function fetchNPSData() {
-    const selectedStateJson = localStorage.getItem("selectedState");
-    const selectedStateObj = JSON.parse(selectedStateJson);
-    const selectedStateAbbr = selectedStateObj.abbr;
-    const npsApiKey = "x8MurMnpRvI0zVQH0bsTRh6vhu0wtxtHWZTpXPkd";
-    const apiUrl = 'https://developer.nps.gov/api/v1/parks?stateCode='+selectedStateAbbr+'&api_key='+npsApiKey;
-  
-    fetch(apiUrl)
-      .then(res => res.json())
-      .then(data => {
-        const npsData = data.data.map(item => ({
-          fullName: item.fullName,
-          description: item.description,
-          latitude: item.latitude,
-          longitude: item.longitude,
-          url: item.url
-        }));
-  
-        const npsDataJson = JSON.stringify(npsData);
-        localStorage.setItem('npsData', npsDataJson);
-  
-        console.log(npsData);
-      })
-      .catch((error) => {
-        console.error("Error fetching NPS data:", error);
+btn1.addEventListener('click', (e) => {
+  e.preventDefault();
+  const npsApiKey = "x8MurMnpRvI0zVQH0bsTRh6vhu0wtxtHWZTpXPkd";
+  const selectedStateAbbr = stateInput.value;
+  const apiUrl = `https://developer.nps.gov/api/v1/parks?stateCode=${selectedStateAbbr}&api_key=`+npsApiKey;
+
+  fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+      const parks = data.data;
+      parkContainer.innerHTML = '';
+      parks.forEach(park => {
+        const parkDiv = document.createElement('div');
+        parkDiv.innerHTML = `
+          <h2>${park.fullName}</h2>
+          <p>${park.description}</p>
+          <a href="${park.url}" target="_blank">Visit Park Website</a>
+        `;
+        parkContainer.appendChild(parkDiv);
+
       });
-  }
-
-  function createNPSDataCards() {
-    const npsDataJson = localStorage.getItem("npsData");
-    const npsData = JSON.parse(npsDataJson);
-  
-    const container = document.getElementById("npsDataContainer");
-    
-    npsDataContainer =
-  
-    npsData.forEach(item => {
-      const card = document.createElement("div");
-      card.classList.add("npsData");
-  
-      const header = document.createElement("h2");
-      header.textContent = item.fullName;
-      card.appendChild(header);
-  
-      const description = document.createElement("p");
-      description.textContent = item.description;
-      card.appendChild(description);
-  
-      const url = document.createElement("a");
-      url.textContent = "Visit Website";
-      url.href = item.url;
-      card.appendChild(url);
-  
-      container.appendChild(card);
-    });
-  }
-
-
-
-
-btn1.addEventListener('click', (event) => {
-  event.preventDefault();
-   searchNationalParkWeather();
-  fetchNPSData();
-  createNPSDataCards();
-
-  const selectedState = stateInput.value;
-
-  if (selectedState) {
-    const selectedStateObj = states.find(state => state.abbr === selectedState);
-
-    if (selectedStateObj) {
-      const selectedStateJson = JSON.stringify({ abbr: selectedState});
-      localStorage.setItem('selectedState', selectedStateJson);
-    } else {
-      console.log('State not found in the states array');
-    }
-  }
-});
+    })
+})
 
 
 // //--------------------------------------------------------------------------------------------------------------------------------------------//
