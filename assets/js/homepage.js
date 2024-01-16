@@ -89,7 +89,7 @@ stateInput.addEventListener('change', (event) => {
   }
 
   function pickArrivalDate() {
-    // get the selected arrival date 
+    // get the selected arrival  date 
     const ArrivalDateInput = document.getElementById('arriveDate');
     const selectedArrivalDate = ArrivalDateInput.value;
     
