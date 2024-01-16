@@ -86,7 +86,8 @@ body {
 }
 
 .stateInput{
-    margin-bottom: 15px;;
+    margin-bottom: 15px;
+    margin-top: 10px;
     padding: 11px;
 }
 
@@ -97,99 +98,3 @@ body {
     width: 100%;
 }
 
-/* body {
-    font-family: 'Inter', sans-serif;
-    background-color: #D9D9D9;
-    background-image: url(../images/forrest.jpg);
-    background-repeat: no-repeat;
-    background-size: 100%;
-
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 50px;
-    background-color: blue;
-    margin-bottom: 0%;
-}
-
-.title {
-    background-image: url(../images/Banner.png);
-    background-repeat: no-repeat;
-    background-size: 100%;
-    color: #fff;
-    text-align: right;
-}
-
-.input-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 400px;
-    margin-bottom: 20px;
-
-}
-
-.input-container input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.input-container input[type="date"] {
-    width: 50%;
-}
-
-.search-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #3C7EA4;
-    color: white;
-    font-size: 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.search-button:hover {
-    background-color: #2D6482;
-}
-
-#weatherInfo {
-    margin-top: 20px;
-}
-
-.forecast-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 400px;
-    margin-bottom: 20px;
-    padding: 10px;
-}
-
-.forecast-day {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100px;
-    background-color: #fff;
-    padding: 20px;
-}
-
-.stateInput{
-    margin-bottom: 15px;;
-    padding: 11px;
-}
-
-.npsDataWeather {
-    margin-top: 1rem;
-    border: 1px solid #ccc;
-    padding: 1rem;
-    border-radius: 4px;
-  } */
