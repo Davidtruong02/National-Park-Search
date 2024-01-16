@@ -87,6 +87,20 @@ stateInput.addEventListener('change', (event) => {
       console.log('State not found in the states array');
     }
   }
+
+  function pickArrivalDate() {
+    // get the selected arrival date 
+    const ArrivalDateInput = document.getElementById('arriveDate');
+    const selectedArrivalDate = ArrivalDateInput.value;
+    
+    // display the selected arrival date 
+    const resultParagraph = document.getElementById('result');
+    if (selectedArrivalDate) {
+     resultParagraph.textContent = 'Arrival Date Selected: ${selectedarrivalDate}';
+    } else {
+        resultParagraph.textContent = 'please select an arrival date';
+    }
+    }
 });
 
 
