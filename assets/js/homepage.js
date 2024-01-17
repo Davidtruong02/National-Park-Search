@@ -83,7 +83,42 @@ stateInput.addEventListener('change', (event) => {
     }
   }
 });
+//--------------------------------------------------------------------------------------------------------------------------------------------//
+//                                                                     WEATHER API                                                              //
+//--------------------------------------------------------------------------------------------------------------------------------------------//
 
+
+
+const weatherApiKey = '7b81d4dd82747d9a1553232e25c5c450';
+
+async function getWeatherForecast(lat, lon) {
+  const weatherApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${weatherApiKey}`;
+
+  return fetch(weatherApiUrl)
+      .then(response => response.json())
+      .then(data => {
+          const forecastList = data.list;
+
+          // Group forecast data by day
+          const dailyForecasts = {};
+          forecastList.forEach(forecast => {
+              const date = new Date(forecast.dt * 1000).toISOString().split('T')[0];
+              if (!dailyForecasts[date]) {
+                  dailyForecasts[date] = [];
+              }
+              dailyForecasts[date].push(forecast);
+          });
+
+          // Extract one forecast per day (assuming 3-hour intervals)
+          const dailyForecast = Object.values(dailyForecasts).map(dayForecasts => dayForecasts[0]);
+
+          return dailyForecast;
+      })
+      .catch(error => {
+          console.error('Error fetching weather data:', error);
+          return [];
+      });
+    }
 
 
 
@@ -100,24 +135,72 @@ btn1.addEventListener('click', (e) => {
   const npsApiKey = "x8MurMnpRvI0zVQH0bsTRh6vhu0wtxtHWZTpXPkd";
   const selectedStateAbbr = stateInput.value;
   const apiUrl = `https://developer.nps.gov/api/v1/parks?stateCode=${selectedStateAbbr}&api_key=`+npsApiKey;
-
+  const selectedDate = document.querySelector('input[name="arrival-date"]').value;
+ 
   fetch(apiUrl)
     .then(response => response.json())
     .then(data => {
-      const parks = data.data.slice(0, 5);
+      const parks = data.data.slice(0, 3);
       parkContainer.innerHTML = '';
-      parks.forEach(park => {
+      parks.forEach(async park => {
         const parkDiv = document.createElement('div');
+        parkDiv.classList.add('park-container');
+
+
+        const weatherData = await getWeatherForecast(park.latitude, park.longitude, selectedDate);
+        console.log('Weather Data for Park:', weatherData); // Log weather data
+        
         parkDiv.innerHTML = `
           <h2>${park.fullName}</h2>
           <p>${park.description}</p>
           <a href="${park.url}" target="_blank">Visit Park Website</a>
         `;
+
+        const weatherContainer = document.createElement('div');
+        weatherContainer.innerHTML = `<h3>5-Day Weather Forecast:</h3>`;
+        weatherContainer.innerHTML += renderWeatherForecast(weatherData);
+        weatherContainer.classList.add('weather-info'); // Add a class for styling
+        parkDiv.appendChild(weatherContainer);
+
         parkContainer.appendChild(parkDiv);
 
        });
     })
 })
+
+
+function convertCelsiusToFahrenheit(celsius) {
+  return (celsius - 273.15) * 9/5 + 32;
+}
+
+function renderWeatherForecast(weatherData) {
+  console.log('Weather Data:', weatherData); // Log weather data
+
+  if (!weatherData || weatherData.length === 0) {
+      return '<p>Weather data not available</p>';
+  }
+
+  // Skip the first item (current weather) and only consider the forecast
+  const forecastData = weatherData.slice(1);
+
+  return forecastData.map(day => {
+      // Extract relevant information from the forecast object
+      const date = new Date(day.dt * 1000).toDateString();
+      const celsiusTemperature = day.temp ? day.temp.day : (day.main ? day.main.temp : 'N/A');
+      const fahrenheitTemperature = convertCelsiusToFahrenheit(celsiusTemperature);
+      const description = day.weather && day.weather.length > 0 ? day.weather[0].description : 'N/A';
+
+      // Construct HTML for each day's forecast
+      return `
+          <div class="weather-forecast">
+              <p> <img src="https://openweathermap.org/img/w/${day.weather[0].icon}.png" alt="${description}" /> </p>
+              <p>Date: ${date}</p>
+              <p>Temperature: ${fahrenheitTemperature.toFixed(2)} °F</p>
+              <p>Description: ${description}</p>
+          </div>
+      `;
+  }).join('');
+}
 
 
 // //--------------------------------------------------------------------------------------------------------------------------------------------//
