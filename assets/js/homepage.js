@@ -91,7 +91,7 @@ stateInput.addEventListener('change', (event) => {
 
 const weatherApiKey = '7b81d4dd82747d9a1553232e25c5c450';
 
-async function getWeatherForecast(lat, lon) {
+async function getWeatherForecast(lat, lon,) {
   const weatherApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${weatherApiKey}`;
 
   return fetch(weatherApiUrl)
@@ -128,45 +128,141 @@ async function getWeatherForecast(lat, lon) {
 //--------------------------------------------------------------------------------------------------------------------------------------------//
 
 
-
-
 btn1.addEventListener('click', (e) => {
   e.preventDefault();
   const npsApiKey = "x8MurMnpRvI0zVQH0bsTRh6vhu0wtxtHWZTpXPkd";
   const selectedStateAbbr = stateInput.value;
   const apiUrl = `https://developer.nps.gov/api/v1/parks?stateCode=${selectedStateAbbr}&api_key=`+npsApiKey;
   const selectedDate = document.querySelector('input[name="arrival-date"]').value;
- 
+  
+  
+
   fetch(apiUrl)
     .then(response => response.json())
     .then(data => {
-      const parks = data.data.slice(0, 3);
+      const parks = data.data;
       parkContainer.innerHTML = '';
-      parks.forEach(async park => {
-        const parkDiv = document.createElement('div');
-        parkDiv.classList.add('park-container');
 
+      // Create an array of promises for the weather data
+      const arrivalDate = document.querySelector('#arrivalDate').value;
+      const weatherPromises = parks.map(park => getWeatherForecast(park.latitude, park.longitude, arrivalDate));
 
-        const weatherData = await getWeatherForecast(park.latitude, park.longitude, selectedDate);
-        console.log('Weather Data for Park:', weatherData); // Log weather data
-        
-        parkDiv.innerHTML = `
-          <h2>${park.fullName}</h2>
-          <p>${park.description}</p>
-          <a href="${park.url}" target="_blank">Visit Park Website</a>
-        `;
+      // Wait for all the promises to resolve
+      Promise.all(weatherPromises)
+        .then(weatherDataArray => {
+          // Sort the parks by name
+          parks.sort((a, b) => a.fullName.localeCompare(b.fullName));
 
-        const weatherContainer = document.createElement('div');
-        weatherContainer.innerHTML = `<h3>5-Day Weather Forecast:</h3>`;
-        weatherContainer.innerHTML += renderWeatherForecast(weatherData);
-        weatherContainer.classList.add('weather-info'); // Add a class for styling
-        parkDiv.appendChild(weatherContainer);
+          // Display the parks
+          parks.forEach((park, index) => {
+            const parkDiv = document.createElement('details');
+            parkDiv.classList.add('park-container');
 
-        parkContainer.appendChild(parkDiv);
+            // If it's the first park, add the 'open' attribute
+            if (index === 0) {
+              parkDiv.setAttribute('open', '');
+            }
 
-       });
+            const summary = document.createElement('summary');
+            summary.classList.add('summary-width', 'park-name');
+            summary.textContent = park.fullName;
+            parkDiv.appendChild(summary);
+
+            const parkInfo = document.createElement('div');
+            parkInfo.innerHTML = `
+              <p>${park.description}</p>
+              <a href="${park.url}" target="_blank">Visit Park Website</a>
+            `;
+            parkDiv.appendChild(parkInfo);
+
+            const weatherContainer = document.createElement('div');
+            weatherContainer.innerHTML = renderWeatherForecast(weatherDataArray[index]);
+            weatherContainer.classList.add('weather-info'); // Add a class for styling
+            parkDiv.appendChild(weatherContainer);
+
+            parkContainer.appendChild(parkDiv);
+          });
+        });
     })
 })
+ 
+//   fetch(apiUrl)
+//     .then(response => response.json())
+//     .then(data => {
+//       const parks = data.data; /*.slice(0, 3);*/
+//       parkContainer.innerHTML = '';
+//       parks.forEach(async park => {
+//         const parkDiv = document.createElement('details');
+//         parkDiv.classList.add('park-container');
+      
+//         const summary = document.createElement('summary');
+//         summary.classList.add('summary-width');
+//         summary.textContent = park.fullName;
+//         parkDiv.appendChild(summary);
+      
+//         const parkInfo = document.createElement('div');
+//         parkInfo.innerHTML = `
+//           <p>${park.description}</p>
+//           <a href="${park.url}" target="_blank">Visit Park Website</a>
+//         `;
+//         parkDiv.appendChild(parkInfo);
+      
+//         const weatherData = await getWeatherForecast(park.latitude, park.longitude, selectedDate);
+//         console.log('Weather Data for Park:', weatherData); // Log weather data
+      
+//         const weatherContainer = document.createElement('div');
+//         weatherContainer.innerHTML = renderWeatherForecast(weatherData);
+//         weatherContainer.classList.add('weather-info'); // Add a class for styling
+//         parkDiv.appendChild(weatherContainer);
+      
+//         parkContainer.appendChild(parkDiv);
+//       });
+//     })
+// })
+
+
+
+
+
+
+
+// btn1.addEventListener('click', (e) => {
+//   e.preventDefault();
+//   const npsApiKey = "x8MurMnpRvI0zVQH0bsTRh6vhu0wtxtHWZTpXPkd";
+//   const selectedStateAbbr = stateInput.value;
+//   const apiUrl = `https://developer.nps.gov/api/v1/parks?stateCode=${selectedStateAbbr}&api_key=`+npsApiKey;
+//   const selectedDate = document.querySelector('input[name="arrival-date"]').value;
+ 
+//   fetch(apiUrl)
+//     .then(response => response.json())
+//     .then(data => {
+//       const parks = data.data.slice(0, 3);
+//       parkContainer.innerHTML = '';
+//       parks.forEach(async park => {
+//         const parkDiv = document.createElement('div');
+//         parkDiv.classList.add('park-container');
+
+
+//         const weatherData = await getWeatherForecast(park.latitude, park.longitude, selectedDate);
+//         console.log('Weather Data for Park:', weatherData); // Log weather data
+        
+//         parkDiv.innerHTML = `
+//           <h2>${park.fullName}</h2>
+//           <p>${park.description}</p>
+//           <a href="${park.url}" target="_blank">Visit Park Website</a>
+//         `;
+
+//         const weatherContainer = document.createElement('div');
+//         weatherContainer.innerHTML = `<h3>5-Day Weather Forecast:</h3>`;
+//         weatherContainer.innerHTML += renderWeatherForecast(weatherData);
+//         weatherContainer.classList.add('weather-info'); // Add a class for styling
+//         parkDiv.appendChild(weatherContainer);
+
+//         parkContainer.appendChild(parkDiv);
+
+//        });
+//     })
+// })
 
 
 function convertCelsiusToFahrenheit(celsius) {

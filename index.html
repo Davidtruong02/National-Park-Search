@@ -18,12 +18,13 @@
             <select class="stateInput" id="stateInput" name="state">
                 <option value="">Parks by state</option>
             </select>
-            <input type="date" name="arrival-date" placeholder="Arrival Date">
+            <label for="arrivalDate">Arrival date</label>
+            <input type="date" name="arrival-date" placeholder="Arrival Date" id="arrivalDate">
             <button type="submit" id="search" class="search-button">Search</button>
         </form>
     </div>
 
-    <div id="parkContainer" class="park-container"></div>
+    <div id="parkContainer" class="has-data"></div>
         <div id="parkforecast"></div>
     </div>
 
