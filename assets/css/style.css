@@ -4,7 +4,12 @@ body {
     background-image: url(../images/forrest.jpg);
     background-repeat: no-repeat;
     background-size: 100%;
+    height: 100%;
 
+}
+
+html {
+    height: 100%;
 }
 
 .container {
@@ -15,7 +20,7 @@ body {
     background-color: brown;
     margin-bottom: 0%;
     height: 100%;
-    width: 20%;
+    width: 15%;
 }
 
 .title {
@@ -98,14 +103,20 @@ body {
     width: 100%;
 }
 
-#parkContainer {
-    position: fixed;
+.park-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
     top: 10px; /* Adjust the top position as needed */
     right: 10px; /* Adjust the right position as needed */
-    max-width: 600px; /* Adjust the max-width as needed */
+    max-width: 75%; /* Adjust the max-width as needed */
     background-color: #ffffff; /* Optional background color */
     padding: 10px; /* Optional padding */
+    margin: 15px; 
     border: 1px solid #ccc; /* Optional border */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional box shadow */
+    
   }
+
+
 
