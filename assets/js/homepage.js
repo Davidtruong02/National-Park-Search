@@ -164,7 +164,7 @@ btn1.addEventListener('click', (e) => {
 
         parkContainer.appendChild(parkDiv);
 
-      });
+       });
     })
 })
 
