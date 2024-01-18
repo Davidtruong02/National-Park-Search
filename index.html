@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./Assets/CSS/style.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
     <title>National Park Search</title>
 </head>
 
@@ -14,71 +14,27 @@
         <div class="title">
             <h1>National Park Search</h1>
         </div>
-        <form class="input-container" id="input-container">
-            <input type="text" name="park" id="parkInput">
+        <form class="input-container" id="input-container">         
             <select class="stateInput" id="stateInput" name="state">
                 <option value="">Parks by state</option>
-            <input type="date" name="arrival-date" placeholder="Arrival Date">
+            </select>
+            <label for="arrivalDate">Arrival date</label>
+            <input type="date" name="arrival-date" placeholder="Arrival Date" id="arrivalDate">
             <button type="submit" id="search" class="search-button">Search</button>
         </form>
-        <div class="weather-container" id="weather-container">
-            <div class="current-weather" id="current-weather"></div>
-            <div class="forecast-container" id="forecast-container"></div>  
-        </div>
-    </div>
-    <div id="npsDataContainer">
-        <style>
-            
-        </style>
     </div>
 
+    <div id="parkContainer" class="has-data"></div>
+        <div id="parkforecast"></div>
+    </div>
+
+    
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
-    <script src="./assets/js/homepage.js"></script>
-
-
+    <script src="./assets/js/homepage.js"></script> 
 </body>
 
 </html>
 
 
 
-<!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="./Assets/CSS/style.css">
-    <title>National Park Search</title>
-</head>
-
-<body>
-    <div class="container">
-        <div class="title">
-            <h1>National Park Search</h1>
-        </div>
-        <form class="input-container" id="input-container"> -->
-            <!-- <input type="text" name="park" id="parkInput" placeholder="National Park Name"> -->
-            <!-- <select class="stateInput" id="stateInput" name="state">
-                <option value="">Parks by state</option>
-            <input type="date" name="arrival-date" placeholder="Arrival Date">
-            <button type="submit" id="search" class="search-button">Search</button>
-        </form>
-        <div class="weather-container" id="weather-container">
-            <div class="current-weather" id="current-weather"></div>
-            <div class="forecast-container" id="forecast-container"></div>  
-        </div>
-    </div>
-    <div id="npsDataContainer"></div>
-        <div id="npsDataWeather"></div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
-    <script src="./assets/js/homepage.js"></script>
-
-
-</body>
-
-</html> -->

@@ -1,21 +1,32 @@
+html
+body{
+    overflow-y: scroll;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     background-color: #D9D9D9;
     background-image: url(../images/forrest.jpg);
-    background-repeat: no-repeat;
-    background-size: 100%;
+    background-repeat: repeat;
+    background-size: cover;
+    /* height: 100%; */
 
 }
+
+/* html {
+    height: 100%;
+} */
 
 .container {
     display: flex;
     flex-direction: column;
     align-items: self-start;
     padding: 50px;
-    background-color: brown;
+    background-color: rgb(101,67,33);
     margin-bottom: 0%;
-    height: 100%;
-    width: 20%;
+    height: auto;
+    width: 15%;
+    overflow: visible;
 }
 
 .title {
@@ -25,6 +36,8 @@ body {
     color: #fff;
     text-align: right;
 }
+
+
 
 .input-container {
     display: flex;
@@ -86,110 +99,61 @@ body {
 }
 
 .stateInput{
-    margin-bottom: 15px;;
+    margin-bottom: 15px;
+    margin-top: 10px;
     padding: 11px;
     margin-top: 10px;
 }
 
-.npsDataContainer {
+
+  #parkContainer {
+    position: absolute;
     display: flex;
     flex-direction: column;
-    align-items: center;
-}
-
-/* body {
-    font-family: 'Inter', sans-serif;
-    background-color: #D9D9D9;
-    background-image: url(../images/forrest.jpg);
-    background-repeat: no-repeat;
-    background-size: 100%;
-
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 50px;
-    background-color: blue;
-    margin-bottom: 0%;
-}
-
-.title {
-    background-image: url(../images/Banner.png);
-    background-repeat: no-repeat;
-    background-size: 100%;
-    color: #fff;
-    text-align: right;
-}
-
-.input-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 400px;
-    margin-bottom: 20px;
-
-}
-
-.input-container input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
+    align-items: left;
+    top: 1%; /* Adjust the top position as needed */
+    left: 25%; /* Adjust the left position to center the container */
+    right: 5%;
+    max-width: 85%; /* Increase the width to make it wider */
+    padding: 1px; /* Optional padding */
+    border: 1px solid  rgb(86, 96, 105); /* Optional border */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional box shadow */
+    background-color: rgb(148, 154, 158);
     border-radius: 5px;
-}
-
-.input-container input[type="date"] {
-    width: 50%;
-}
-
-.search-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #3C7EA4;
-    color: white;
-    font-size: 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.search-button:hover {
-    background-color: #2D6482;
-}
-
-#weatherInfo {
-    margin-top: 20px;
-}
-
-.forecast-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 400px;
     margin-bottom: 20px;
-    padding: 10px;
+    background-image: linear-gradient(to right, rgba(3, 165, 3, 0), rgba(101,67,33,1));
+    color: linear-gradient(to left, rgba(3, 165, 3, 0), rgba(101,67,33,1));
 }
 
-.forecast-day {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100px;
-    background-color: #fff;
-    padding: 20px;
-}
+.summary-width {
+    height: 30px;
+    border: 1px solid black;
+    
+  }
 
-.stateInput{
-    margin-bottom: 15px;;
-    padding: 11px;
-}
-
-.npsDataWeather {
-    margin-top: 1rem;
-    border: 1px solid #ccc;
-    padding: 1rem;
-    border-radius: 4px;
+  /* .park-name {
+    background-image: linear-gradient(to right, green, brown);
   } */
+
+  .park-name:hover {
+    background-color: brown; 
+    cursor: pointer;
+    
+  }
+
+.weather-info {
+    display: flex;
+    flex-wrap: nowrap; /* Ensure it stays in a single row */
+    overflow-x: auto; /* Add horizontal scroll if needed */
+    overflow-y: auto; /* Add vertical scroll if needed */
+    max-width: 300%; /* Adjust the max-width as needed */
+    border: 1px solid  rgb(7, 7, 7); /* Optional border */
+    margin: 10px;
+    padding: 5px;
+    /* background-image: linear-gradient(to right, green, brown); */
+}
+
+.weather-forecast {
+    padding: 10px;
+    border-color: 1px solid black;
+}
