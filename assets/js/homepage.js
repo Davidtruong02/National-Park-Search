@@ -125,7 +125,6 @@ async function getWeatherForecast(lat, lon,) {
     }
     
     function renderWeatherForecast(weatherData) {
-      console.log('Weather Data:', weatherData); // Log weather data
     
       if (!weatherData || weatherData.length === 0) {
           return '<p>Weather data not available</p>';

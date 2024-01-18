@@ -13,10 +13,6 @@ body {
 
 }
 
-/* html {
-    height: 100%;
-} */
-
 .container {
     display: flex;
     flex-direction: column;
@@ -155,4 +151,25 @@ body {
 .weather-forecast {
     padding: 10px;
     border-color: 1px solid black;
+}
+
+@media only screen and (max-width: 1024px) {
+    #parkContainer, .container{
+        width: 70%;
+        flex-wrap: wrap;
+        position: relative;
+        flex-direction: column;
+        left: 5%;
+        align-self: auto;
+    }
+}
+
+@media only screen and (max-width: 875px) {
+    #parkContainer, .weather-info {
+        width: 80%;
+        flex-wrap: wrap;
+        position: relative;
+        flex-direction: column;
+        left: 7%;
+    }
 }
