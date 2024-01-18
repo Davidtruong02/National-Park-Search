@@ -160,13 +160,15 @@ async function getWeatherForecast(lat, lon,) {
 //--------------------------------------------------------------------------------------------------------------------------------------------//
 
 
+// Initially hide the div
+document.getElementById('parkContainer').style.display = 'none';
+
+
 btn1.addEventListener('click', (e) => {
   e.preventDefault();
   const npsApiKey = "x8MurMnpRvI0zVQH0bsTRh6vhu0wtxtHWZTpXPkd";
   const selectedStateAbbr = stateInput.value;
-  const apiUrl = `https://developer.nps.gov/api/v1/parks?stateCode=${selectedStateAbbr}&api_key=`+npsApiKey;
-  const selectedDate = document.querySelector('input[name="arrival-date"]').value;
-  
+  const apiUrl = `https://developer.nps.gov/api/v1/parks?stateCode=${selectedStateAbbr}&api_key=`+npsApiKey;  
   
 
   fetch(apiUrl)
@@ -174,6 +176,8 @@ btn1.addEventListener('click', (e) => {
     .then(data => {
       const parks = data.data;
       parkContainer.innerHTML = '';
+
+      
 
       // Create an array of promises for the weather data
       const arrivalDate = document.querySelector('#arrivalDate').value;
@@ -214,9 +218,14 @@ btn1.addEventListener('click', (e) => {
 
             parkContainer.appendChild(parkDiv);
           });
+
+          // Show the div after the data is loaded
+          document.getElementById('parkContainer').style.display = 'block';
+
         });
     })
 })
+
  
 
 
